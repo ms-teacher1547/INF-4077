@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "184649048349",
+    "project_id": "meal-tracker-app-9ab00",
+    "storage_bucket": "meal-tracker-app-9ab00.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184649048349:android:97487ad660ea82bbd101f4",
+        "android_client_info": {
+          "package_name": "com.example.meal_tracker_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6BeFePt-QL3wgcgdTAy98dRZEoFQJGZI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
