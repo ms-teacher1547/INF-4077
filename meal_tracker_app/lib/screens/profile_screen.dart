@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _saveAndReturn() {
     final bmi = double.tryParse(_bmiResult) ?? 0; // Convertir l'IMC
-    final caloricGoal = int.tryParse(_caloricGoalController.text) ?? 2000; // Convertir l'objectif calorique
+    final caloricGoal = int.tryParse(_caloricGoalController.text) ?? 2600; // Convertir l'objectif calorique
 
     Navigator.of(context).pop({
       'bmi': bmi,

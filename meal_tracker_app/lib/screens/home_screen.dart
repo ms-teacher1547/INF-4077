@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Meal> _meals = [];
-  int _caloricGoal = 2000; // Valeur par défaut
+  int _caloricGoal = 2600; // Valeur par défaut
   double _bmi = 0; // IMC par défaut
 
   // Calcul des calories totales consommées aujourd'hui
