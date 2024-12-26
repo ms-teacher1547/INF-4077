@@ -43,6 +43,26 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+
+
+  // Modifier un repas existant
+  void _editMeal(Meal updatedMeal) {
+    setState(() {
+      final index = _meals.indexWhere((meal) => meal.id == updatedMeal.id);
+      if (index != -1) {
+        _meals[index] = updatedMeal;
+      }
+    });
+  }
+
+  // Supprimer un repas par ID
+  void _deleteMeal(String mealId) {
+    setState(() {
+      _meals.removeWhere((meal) => meal.id == mealId);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +136,22 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => MealHistoryScreen(meals: _meals),
+                    builder: (context) => MealHistoryScreen(
+                      meals: _meals,
+                      onEditMeal: (updatedMeal) {
+                        setState(() {
+                          final index = _meals.indexWhere((meal) => meal.id == updatedMeal.id);
+                          if (index != -1) {
+                            _meals[index] = updatedMeal; // Mise à jour immédiate du repas
+                          }
+                        });
+                      },
+                      onDeleteMeal: (mealId) {
+                        setState(() {
+                          _meals.removeWhere((meal) => meal.id == mealId); // Suppression immédiate
+                        });
+                      },
+                    ),
                   ),
                 );
               },

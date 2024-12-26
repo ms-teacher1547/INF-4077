@@ -3,8 +3,9 @@ import '../models/meal_model.dart';
 
 class AddMealScreen extends StatefulWidget {
   final Function(Meal) onAddMeal;
+  final Meal? existingMeal; // Repas à modifier, null si on ajoute un nouveau repas
 
-  AddMealScreen({required this.onAddMeal});
+  const AddMealScreen({super.key, required this.onAddMeal, this.existingMeal});
 
   @override
   _AddMealScreenState createState() => _AddMealScreenState();
@@ -14,44 +15,53 @@ class _AddMealScreenState extends State<AddMealScreen> {
   final _nameController = TextEditingController(); // Contrôleur pour le nom du repas
   final _caloriesController = TextEditingController(); // Contrôleur pour les calories
 
+  @override
+  void initState() {
+    super.initState();
+    // Si un repas existant est passé, pré-remplir les champs
+    if (widget.existingMeal != null) {
+      _nameController.text = widget.existingMeal!.name;
+      _caloriesController.text = widget.existingMeal!.calories.toString();
+    }
+  }
+
   void _submitMeal() {
-    final name = _nameController.text.trim(); // Récupérer et nettoyer le nom
-    final caloriesText = _caloriesController.text.trim(); // Récupérer et nettoyer les calories
+    final name = _nameController.text.trim(); // Nettoyer le texte saisi
+    final caloriesText = _caloriesController.text.trim();
 
     if (name.isEmpty || caloriesText.isEmpty) {
-      // Vérifie si un champ est vide
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill all fields correctly!')),
       );
       return;
     }
 
-    final calories = int.tryParse(caloriesText); // Convertir les calories en entier
-
+    final calories = int.tryParse(caloriesText);
     if (calories == null || calories <= 0) {
-      // Vérifie si les calories sont valides
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter a valid number of calories!')),
       );
       return;
     }
 
-    // Créer un nouvel objet Meal si tout est correct
+    // Créer ou modifier un repas
     final newMeal = Meal(
-      id: DateTime.now().toString(),
+      id: widget.existingMeal?.id ?? DateTime.now().toString(), // Conserve l'ID existant si modification
       name: name,
       calories: calories,
-      dateTime: DateTime.now(),
+      dateTime: widget.existingMeal?.dateTime ?? DateTime.now(), // Conserve la date d'origine si modification
     );
 
-    widget.onAddMeal(newMeal); // Ajoute le repas à la liste principale
+    widget.onAddMeal(newMeal); // Ajoute ou met à jour le repas dans la liste
     Navigator.of(context).pop(); // Ferme l'écran
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add a Meal')),
+      appBar: AppBar(
+        title: Text(widget.existingMeal == null ? 'Add a Meal' : 'Edit Meal'), // Change le titre selon le contexte
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -69,7 +79,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submitMeal,
-              child: const Text('Add Meal'),
+              child: Text(widget.existingMeal == null ? 'Add Meal' : 'Save Changes'), // Change le texte selon le contexte
             ),
           ],
         ),

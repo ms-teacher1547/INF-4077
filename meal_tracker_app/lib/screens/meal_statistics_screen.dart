@@ -4,7 +4,7 @@ import '../models/meal_model.dart';
 class MealStatisticsScreen extends StatelessWidget {
   final List<Meal> meals;
 
-  MealStatisticsScreen({required this.meals});
+  const MealStatisticsScreen({super.key, required this.meals});
 
   // Calculer les calories totales pour une période donnée
   int _calculateTotalCalories(DateTime startDate, DateTime endDate) {
