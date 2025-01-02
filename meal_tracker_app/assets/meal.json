@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "meal-tracker-app-9ab00",
+  "private_key_id": "ca9518f92fad0b5b9b7eef414dde108fcf80f3a1",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCen5xx+f7pCYnH\no+WDFLP1oT6CjPTTOiutfMDA8BhWzFTGv5/Qlqh84UkvBbO7SvZ0CC8upRDEwE0M\nIbfmxXmxVR5KYosD+XSNlpYjAyeiFRkmqooq61Xxhk3rgOHiuCMYOPl1cp2eOGnH\nUrz34uozlCkunThBt+70/RJWeHgSNaRfYAz6LemWVagIP4vXZ5UflqaG/0/cGJyN\nu9TVHoyO3ssibZ07345fK7PaBMVzaXbXqCQMmxeUrRyjfkVdjtRhSPrU6riHYy4Q\njAibBmLnittOpaDgRt+UK+ViQU88gyD5KPiDVhOiZ6VjekgON5Ufn0imqsdCyUkR\nF4IygXN/AgMBAAECggEAGQJ3ay0MePetBpIb1MAF47uJnJHW5Bru2gqqZYE1hTHw\nR+ncq8mlRRNMM6LFhMk79G156vPRogPj4f7K/RKzrjcKcJX67yR8sPpGL70GmbKT\n5ZnL8Rpr0YnobTJD6zg3KFGLW2431cN1Qh0UeE0JuhopKBVX0lzKy0u/gWy7Gbul\njV9IzZSHo7dUmCtN13e2ACyb9VqfyUcsPR6FJvp3LXKzXsXxFosXaiZEkuJHWG1g\nTabrPu2At/2O41U1srFwztRUZ5rpBo4fvnvMaiXl6mRS0iV9XZ5XLRQi/Ng/dbLu\noyARZyUChzS3+hDTsdo6Q7MTbr/VgSA6VSLGKQ8R8QKBgQDfedG6ttb8Utcpa8sf\nt6WLg/cnubejZnX5qPEfQE0PFUrQXFeyAA/NzQEVbGECALAtQHsr8XnAOrxP7O3N\nisQgXA2qM1p/nnaU2iJEp8rIU1f7szig8p8khFizw/xU1THaeu9qKJnMrIerEck/\nljcxjFwdGEw2l9Hk0Un1X6JFyQKBgQC1tYvKOhcZ2kAtgp3x6ifs69qnm3Fqgsq1\nncrs8OqbrYJrKopdYoFwhFmTByyKX7QXZUxP4zgkmZSqGuznHXXPyVjdoJCHXFjh\n79csoDQ+e6ph/HyLtMdyolYnHTXuowP4FCuek6h9dcg2zNpWxANb6+x0UxnblqH7\nGFvGpxazBwKBgQCr9lN6t8NKunwytW3CZFCQwOVovjIfHHLfwC56+8HQP3QoTUZ2\nBDIlDQEueQ1Uuy7WQ24EbHZhg1Dwt8JtjcBJnkwtkgKrfUaGWCxSZENYTzm+xzRm\nNQxczzJqcf8zUDJiioK8T625n3FuI+uWcILcL8OZ596Ni9nJl3qvw/1ccQKBgH/7\nOVUa6xBjXxZuy+4KXUqKp/urCQvayQl39OhDmwpA//2Y/dFeQwrLvQdIYz+mvoJH\n76LIx89HeKUCx97UKhlKmFOo9oLQMS4ZLjWZNJLZqRzQp6wCjQOZgRKViVnl6TK+\niiZrm52Z6oVmbVX1QuRoW6dmrGy0QKxI8MMPBnbbAoGBANDc4RBpQoTYcFXX+BI9\nvExVrWfnSG8sp3UWwn80P2PFNJXFea+eCAC9ogesr5iqc24Eia79g6cd897YHsPj\n42O9G0OlTnFxTTF9RCaIQLfn16h5tQdyQxmSnyJ0VbolBDdPB2INJ8FC+tftOn0b\nf/RDR8OMWOQw1TL42aHtwqih\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow-client@meal-tracker-app-9ab00.iam.gserviceaccount.com",
+  "client_id": "118122144292562322312",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-client%40meal-tracker-app-9ab00.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

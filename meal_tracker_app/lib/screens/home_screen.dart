@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_tracker_app/screens/meal_recommendations_screen.dart';
+import 'package:meal_tracker_app/screens/reservation_history_screen.dart';
+import 'package:meal_tracker_app/screens/restaurant_map_screen.dart';
 import '../models/meal_model.dart';
+import 'chat_screen.dart';
+import 'nearest_dietitian_screen.dart';
 import 'profile_screen.dart';
 import 'add_meal_screen.dart';
 import 'meal_history_screen.dart';
@@ -43,26 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
-
-  // Modifier un repas existant
-  void _editMeal(Meal updatedMeal) {
-    setState(() {
-      final index = _meals.indexWhere((meal) => meal.id == updatedMeal.id);
-      if (index != -1) {
-        _meals[index] = updatedMeal;
-      }
-    });
-  }
-
-  // Supprimer un repas par ID
-  void _deleteMeal(String mealId) {
-    setState(() {
-      _meals.removeWhere((meal) => meal.id == mealId);
-    });
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const ProfileScreen()),
                 ).then((value) {
-                  // Mettre à jour l'objectif calorique et l'IMC depuis le profil
                   if (value != null && value is Map<String, dynamic>) {
                     setState(() {
                       _caloricGoal = value['caloricGoal'];
@@ -99,21 +82,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => MealRecommendationsScreen(bmi: _bmi),
-                    ),
-                  ).then((newMeal) {
-                    if (newMeal != null && newMeal is Meal) {
-                      setState(() {
-                        _meals.add(newMeal);
-                        _checkCaloricGoal();
-                      });
-                    }
-                  });
-                },
-                child: const Text('View Meal Recommendations'),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => MealRecommendationsScreen(bmi: _bmi),
+                  ),
+                ).then((newMeal) {
+                  if (newMeal != null && newMeal is Meal) {
+                    setState(() {
+                      _meals.add(newMeal);
+                      _checkCaloricGoal();
+                    });
+                  }
+                });
+              },
+              child: const Text('View Meal Recommendations'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -123,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context) => AddMealScreen(onAddMeal: (meal) {
                       setState(() {
                         _meals.add(meal);
-                        _checkCaloricGoal(); // Vérifie après l'ajout du repas
+                        _checkCaloricGoal();
                       });
                     }),
                   ),
@@ -142,13 +125,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         setState(() {
                           final index = _meals.indexWhere((meal) => meal.id == updatedMeal.id);
                           if (index != -1) {
-                            _meals[index] = updatedMeal; // Mise à jour immédiate du repas
+                            _meals[index] = updatedMeal;
                           }
                         });
                       },
                       onDeleteMeal: (mealId) {
                         setState(() {
-                          _meals.removeWhere((meal) => meal.id == mealId); // Suppression immédiate
+                          _meals.removeWhere((meal) => meal.id == mealId);
                         });
                       },
                     ),
@@ -167,6 +150,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
               child: const Text('View Meal Statistics'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => RestaurantMapScreen()),
+                );
+              },
+              child: const Text('Find Nearest Restaurants'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => ReservationHistoryScreen()),
+                );
+              },
+              child: const Text('View Reservations'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => DietitianMapScreen()),
+                );
+              },
+              child: const Text('Find Nearest Dietitian'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => ChatScreen()),
+                );
+              },
+              child: const Text('Open Chat-Bot'),
             ),
           ],
         ),
