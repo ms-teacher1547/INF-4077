@@ -21,36 +21,55 @@ class _AuthScreenState extends State<AuthScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start, // Image reste en haut
+          crossAxisAlignment: CrossAxisAlignment.center, // Centrer le texte/formulaire
           children: [
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-              keyboardType: TextInputType.emailAddress,
+            Image.asset(
+              'assets/images/certificat-authentification.png',
+              height: 150,
             ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
+            SizedBox(height: 20), // Espacement après l'image
+            Text(
+              _isLogin ? 'Login' : 'Sign Up',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _submitAuthForm,
-              child: Text(_isLogin ? 'Login' : 'Sign Up'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _isLogin = !_isLogin;
-                });
-              },
-              child: Text(_isLogin
-                  ? 'Create an account'
-                  : 'Already have an account?'),
+            SizedBox(height: 10),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    controller: _emailController,
+                    decoration: InputDecoration(labelText: 'Email'),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  TextField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(labelText: 'Password'),
+                    obscureText: true,
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _submitAuthForm,
+                    child: Text(_isLogin ? 'Login' : 'Sign Up'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _isLogin = !_isLogin;
+                      });
+                    },
+                    child: Text(_isLogin
+                        ? 'Create an account'
+                        : 'Already have an account?'),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
+
     );
   }
 
@@ -58,6 +77,21 @@ class _AuthScreenState extends State<AuthScreen> {
   void _submitAuthForm() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
+
+    if (email.isEmpty || !email.contains('@')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a valid email')),
+      );
+      return;
+    }
+
+    if (password.isEmpty || password.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Password must be at least 6 characters')),
+      );
+      return;
+    }
+
     final auth = FirebaseAuth.instance;
 
     try {
@@ -72,16 +106,15 @@ class _AuthScreenState extends State<AuthScreen> {
           password: password,
         );
       }
-      // Auth success: Navigate to next screen or show a message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Authentication Successful')),
       );
     } on FirebaseAuthException catch (e) {
-      // Handle auth errors
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.message ?? 'Authentication failed')),
       );
     }
   }
+
 
 }
