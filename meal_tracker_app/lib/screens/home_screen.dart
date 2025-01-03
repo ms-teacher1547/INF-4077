@@ -19,8 +19,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Meal> _meals = [];
-  int _caloricGoal = 2600; // Valeur par défaut
+  final List<Meal> _meals = []; // Liste des repas enregistrés
+  int _caloricGoal = 2600; // Objectif calorique par défaut
   double _bmi = 0; // IMC par défaut
 
   // Calcul des calories totales consommées aujourd'hui
@@ -33,9 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
         .fold(0, (total, meal) => total + meal.calories);
   }
 
+  // Vérifie si l'objectif calorique est dépassé
   void _checkCaloricGoal() {
     final totalCalories = _calculateTodayCalories();
     if (totalCalories > _caloricGoal) {
+      // Affiche une alerte si l'objectif est dépassé
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -51,20 +53,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome'),
+        title: const Text('Welcome'), // Titre de la page
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
+              // Déconnexion de l'utilisateur
               FirebaseAuth.instance.signOut();
             },
           ),
         ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
+          padding: const EdgeInsets.all(16.0), // Ajoute des marges autour de la liste
           children: [
+            // Bouton pour accéder au calculateur d'IMC et au profil
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -78,9 +82,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 });
               },
-              child: const Text('Go to Profile & BMI Calculator'),
+              child: const Text('BMI Calculator'),
             ),
             const SizedBox(height: 20),
+
+            // Bouton pour accéder aux recommandations alimentaires
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -91,14 +97,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (newMeal != null && newMeal is Meal) {
                     setState(() {
                       _meals.add(newMeal);
-                      _checkCaloricGoal();
+                      _checkCaloricGoal(); // Vérifie l'objectif calorique
                     });
                   }
                 });
               },
-              child: const Text('View Meal Recommendations'),
+              child: const Text('Meal Recommendations'),
             ),
             const SizedBox(height: 20),
+
+            // Bouton pour ajouter un nouveau repas
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -106,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context) => AddMealScreen(onAddMeal: (meal) {
                       setState(() {
                         _meals.add(meal);
-                        _checkCaloricGoal();
+                        _checkCaloricGoal(); // Vérifie l'objectif calorique après ajout
                       });
                     }),
                   ),
@@ -115,6 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const Text('Add a Meal'),
             ),
             const SizedBox(height: 20),
+
+            // Bouton pour voir l'historique des repas
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -125,22 +135,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         setState(() {
                           final index = _meals.indexWhere((meal) => meal.id == updatedMeal.id);
                           if (index != -1) {
-                            _meals[index] = updatedMeal;
+                            _meals[index] = updatedMeal; // Mise à jour d'un repas
                           }
                         });
                       },
                       onDeleteMeal: (mealId) {
                         setState(() {
-                          _meals.removeWhere((meal) => meal.id == mealId);
+                          _meals.removeWhere((meal) => meal.id == mealId); // Suppression d'un repas
                         });
                       },
                     ),
                   ),
                 );
               },
-              child: const Text('View Meal History'),
+              child: const Text('Meal History'),
             ),
             const SizedBox(height: 20),
+
+            // Bouton pour afficher les statistiques des repas
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -149,17 +161,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               },
-              child: const Text('View Meal Statistics'),
+              child: const Text('Meal Statistics'),
             ),
             const SizedBox(height: 20),
+
+            // Bouton pour trouver les restaurants les plus proches
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => RestaurantMapScreen()),
                 );
               },
-              child: const Text('Find Nearest Restaurants'),
+              child: const Text('Nearest Restaurants'),
             ),
+            const SizedBox(height: 20),
+
+            // Bouton pour trouver un diététicien à proximité
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => DietitianMapScreen()),
+                );
+              },
+              child: const Text('Nearest Dietitian'),
+            ),
+            const SizedBox(height: 20),
+
+            // Bouton pour voir l'historique des réservations
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -168,21 +196,16 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: const Text('View Reservations'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => DietitianMapScreen()),
-                );
-              },
-              child: const Text('Find Nearest Dietitian'),
-            ),
+            const SizedBox(height: 20),
+
+            // Bouton pour ouvrir le chatbot
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => ChatScreen()),
                 );
               },
-              child: const Text('Open Chat-Bot'),
+              child: const Text('Chat-Bot'),
             ),
           ],
         ),
