@@ -9,7 +9,6 @@ Ce projet est une application mobile destinée à aider les utilisateurs à orga
 - **Session**: 2024-2025
 - **Cours**: INF 4077 - Développement d'applications mobiles
 - **Professeur**: Dr. Azanzi Jiomekong
-- **Date limite**: 03/01/2025
 
 ## Fonctionnalités
 1. **Authentification**
@@ -73,5 +72,5 @@ Assurez-vous d'avoir les outils suivants installés sur votre machine :
 - [ms-teacher1547](https://github.com/ms-teacher1547)
 
 ## Licence
-Ce projet est privé et ne dispose pas de licence ouverte.
+Ce projet est public et ne dispose pas de licence ouverte.
 
