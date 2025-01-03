@@ -11,6 +11,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   // Contrôleurs pour gérer les champs de saisie
+  final _nameController = TextEditingController(); // Nouveau champ pour le nom
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -55,6 +56,20 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                // Champ pour le nom (uniquement en mode inscription)
+                if (!_isLogin)
+                  TextField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Name',
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.8),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                if (!_isLogin) const SizedBox(height: 10),
                 // Champ de saisie pour l'email
                 TextField(
                   controller: _emailController,
@@ -118,6 +133,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   // Méthode pour soumettre le formulaire
   void _submitAuthForm() async {
+    final name = _nameController.text.trim(); // Récupère et nettoie le nom
     final email = _emailController.text.trim(); // Récupère et nettoie l'email
     final password = _passwordController.text.trim(); // Récupère et nettoie le mot de passe
     final auth = FirebaseAuth.instance; // Instance Firebase pour l'authentification
@@ -159,6 +175,9 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
+
+        // Enregistrement du nom de l'utilisateur dans son profil Firebase
+        await userCredential.user?.updateDisplayName(name);
 
         // Envoi du mail de vérification
         await userCredential.user?.sendEmailVerification();

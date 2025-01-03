@@ -22,6 +22,24 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Meal> _meals = []; // Liste des repas enregistrés
   int _caloricGoal = 2600; // Objectif calorique par défaut
   double _bmi = 0; // IMC par défaut
+  String? _userName; // Nom de l'utilisateur connecté
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserName(); // Récupère le nom de l'utilisateur au chargement
+  }
+
+  // Récupère le nom de l'utilisateur depuis Firebase
+  Future<void> _fetchUserName() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      setState(() {
+        _userName = user.displayName ?? 'User'; // Utilise le nom ou "User" par défaut
+      });
+    }
+  }
 
   // Calcul des calories totales consommées aujourd'hui
   int _calculateTodayCalories() {
@@ -53,7 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome'), // Titre de la page
+        // Titre personnalisé avec le nom de l'utilisateur
+        title: Text('Welcome, ${_userName ?? '...' }'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -68,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16.0), // Ajoute des marges autour de la liste
           children: [
-            // Bouton pour accéder au calculateur d'IMC et au profil
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -86,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Bouton pour accéder aux recommandations alimentaires
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -106,7 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Bouton pour ajouter un nouveau repas
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -124,7 +140,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Bouton pour voir l'historique des repas
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -152,7 +167,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Bouton pour afficher les statistiques des repas
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -165,7 +179,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Bouton pour trouver les restaurants les plus proches
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -176,7 +189,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Bouton pour trouver un diététicien à proximité
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -187,7 +199,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Bouton pour voir l'historique des réservations
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -198,7 +209,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Bouton pour ouvrir le chatbot
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
